@@ -1,25 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css';
+import { Component } from 'react';
+import DynamicForm from './components/DynamicForm';
+
+
+
+class App extends Component{
+  
+
+  
+ onSubmit =(json) => {
+
+  console.log(json);
+  const a = document.createElement('a');
+  const blob = new Blob([JSON.stringify(json)]);
+  a.href = URL.createObjectURL(blob);
+  a.download = 'formData';                     //filename to download
+  a.click();
+
+
+}
+
+
+ 
+
+
+ 
+ 
+
+
+
+  render() {
+    return (
+      <div className="App">
+        <DynamicForm
+        className="form"
+        formName="Accounts Head"
+        formDesc="A short and precise Description"
+        model={
+          [
+            {key:"AccountHeadName", fieldname: "AccountHeadName",fieldplaceholder:"Account Head Name",fieldlabel:"Account Head Name",fieldrules:{required : true },fieldtype:"text",options:[]},
+            {key:"AccountType", fieldname: "AccountType",fieldplaceholder:"",fieldlabel:"Account Type",fieldrules:[],fieldtype:"select",options:["Assets","Liabilities"]}
+          ]
+        }
+        onSubmit={(model) => {this.onSubmit(model)}}
+        />
+
+      </div>
+    );
+  }
 }
 
 export default App;
